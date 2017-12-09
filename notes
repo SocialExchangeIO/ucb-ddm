@@ -1,0 +1,16 @@
+User's will need to firstly install docker and docker-toolbox onto their machine.  DockerForMac and DockerForWindows is also highly recomended but I don't belive it's neecessary to get up and running.
+
+Once docker is installed and running open the terminial and using 'docker pull` pull drupal and mariadb.  
+
+
+docker pull mariadb
+docker pull drupal
+
+
+ok after pulling them we'll want to create a volume to mount so we don't lose database data if the machines stops.  
+Use the `docker volume create my-vol` command to have docker create a volume for you.    
+
+docker volume create my-vol
+
+
+
