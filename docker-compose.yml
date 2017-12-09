@@ -1,0 +1,44 @@
+# Adopt version 2 syntax:
+#   https://docs.docker.com/compose/compose-file/#/versioning
+version: '2'
+
+volumes:
+    database_data:
+        driver: local
+
+services:
+  db:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ucb
+      MYSQL_USER: ucb
+      MYSQL_DATABASE: ucb
+      MYSQL_PASSWORD: ucb
+    volumes:
+      - my-datavolume:/var/lib/mysql
+    ports:
+      - 4306:3306
+      
+  drupal:
+    image: drupal:8.2-apache
+    ports:
+      - 8080:80
+    volumes:
+      - drupal_vol:/var/www/html/modules
+      - drupal_vol:/var/www/html/profiles
+      - drupal_vol:/var/www/html/themes
+      # this takes advantage of the feature in Docker that a new anonymous
+      # volume (which is what we're creating here) will be initialized with the
+      # existing content of the image at the same location
+      - drupal_vol:/var/www/html/sites
+    restart: always
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8008:8008
+volumes:
+  my-datavolume:
+  drupal_vol:
